@@ -45,3 +45,8 @@ app.get("/render", async (req, res) => {
     res.status(500).send(`Failed to load page: ${error.message}`);
   }
 });
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
