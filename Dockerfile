@@ -1,7 +1,7 @@
-# Use Node.js base image
+# Use slim version of Node.js
 FROM node:18-slim
 
-# Install necessary dependencies
+# Install Chromium dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
@@ -14,13 +14,16 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     libcups2 \
     libdbus-1-3 \
-    libgdk-pixbuf2.0-0 \
-    libnspr4 \
-    libnss3 \
+    libdrm2 \
     libx11-xcb1 \
     libxcomposite1 \
     libxdamage1 \
     libxrandr2 \
+    libnss3 \
+    libnspr4 \
+    libgbm1 \
+    libgtk-3-0 \
+    libxss1 \
     xdg-utils \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
@@ -28,15 +31,15 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and install
+# Install dependencies
 COPY package.json ./
 RUN npm install
 
-# Copy the rest of the code
+# Copy app code
 COPY . .
 
 # Expose port
 EXPOSE 3000
 
-# Start server
+# Run the server
 CMD ["node", "server.js"]
