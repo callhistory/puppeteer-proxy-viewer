@@ -1,0 +1,13 @@
+{
+  "name": "puppeteer-proxy-viewer",
+  "version": "1.0.0",
+  "description": "Render proxy web page using puppeteer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.3.8"
+  }
+}
