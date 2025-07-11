@@ -5,21 +5,21 @@ const { anonymizeProxy } = require("proxy-chain");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Original proxy with auth
+// LunaProxy credentials
 const originalProxyUrl = 'http://user-Vickyu12_Z5pjL-region-us-sessid-usq58zqblt0se7py6e-sesstime-90:Vickyu12@na.lunaproxy.com:12233';
 
 app.get("/render", async (req, res) => {
   let browser;
   try {
-    // Convert to anonymous proxy
+    // Create anonymized proxy that supports HTTPS tunneling
     const proxyUrl = await anonymizeProxy(originalProxyUrl);
 
     browser = await puppeteer.launch({
       headless: "new",
       args: [
         `--proxy-server=${proxyUrl}`,
-        '--no-sandbox',
-        '--disable-setuid-sandbox'
+        "--no-sandbox",
+        "--disable-setuid-sandbox"
       ]
     });
 
@@ -32,14 +32,16 @@ app.get("/render", async (req, res) => {
 
     const html = await page.content();
     await browser.close();
+
     res.set("Content-Type", "text/html");
     res.send(html);
   } catch (err) {
     if (browser) await browser.close();
+    console.error("Browser error:", err.message);
     res.status(500).send("Failed to load page: " + err.message);
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
