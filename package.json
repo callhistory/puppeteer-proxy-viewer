@@ -1,7 +1,7 @@
 {
   "name": "puppeteer-proxy-viewer",
   "version": "1.0.0",
-  "description": "Render proxy web page using puppeteer",
+  "description": "Render proxy web page using Puppeteer and proxy-chain",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
